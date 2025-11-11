@@ -1,0 +1,193 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D’e HMS Academia Portal</title>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; color:#333; line-height:1.6; }
+
+    /* Navbar */
+    nav {
+      background-color: #4CAF50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    nav .logo { font-size: 20px; font-weight: bold; color:white; text-decoration:none; }
+    nav ul { list-style:none; display:flex; gap:15px; transition:max-height 0.3s ease; overflow:hidden; }
+    nav ul li a { color:white; text-decoration:none; padding:6px 12px; font-size:16px; display:block; }
+    nav ul li a:hover { background-color:#45a049; border-radius:5px; }
+
+    .hamburger { display:none; flex-direction: column; cursor:pointer; }
+    .hamburger div { width:25px; height:3px; background-color:white; margin:4px 0; transition:0.3s; }
+
+    /* Header */
+    header { background-color:#66bb6a; color:white; padding:40px 20px 20px 20px; text-align:center; }
+    header h1 { margin-bottom:10px; font-size:2em; }
+    header p { font-size:1em; }
+
+    /* Search Section */
+    .search-section { display:flex; justify-content:center; margin:20px; gap:10px; flex-wrap:wrap; }
+    input[type="text"] { padding:10px; font-size:16px; border:1px solid #ccc; border-radius:5px; flex:1 1 250px; min-width:200px; outline:none; }
+    button { padding:10px 20px; font-size:16px; border:none; background-color:#4CAF50; color:white; border-radius:5px; cursor:pointer; flex:0 0 auto; }
+    button:hover { background-color:#45a049; }
+
+    /* Suggestions box */
+    #suggestions {
+      max-width: 900px;
+      margin: 10px auto;
+      background:white;
+      padding:15px;
+      border-radius:8px;
+      box-shadow:0 0 10px rgba(0,0,0,0.1);
+    }
+    #suggestions ul { list-style:none; padding-left:0; }
+    #suggestions li { margin:8px 0; }
+    #suggestions li a { color:#4CAF50; text-decoration:none; }
+    #suggestions li a:hover { text-decoration:underline; }
+
+    /* Sections */
+    .section { max-width: 900px; margin: 20px auto; background:white; padding:20px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+    h2 { margin-bottom:15px; }
+    ul { list-style:none; padding-left:0; }
+    li { margin:10px 0; }
+
+    footer { text-align:center; padding:20px; background-color:#222; color:white; margin-top:30px; }
+
+    /* Mobile responsiveness */
+    @media screen and (max-width: 768px) {
+      .hamburger { display:flex; }
+      nav ul { flex-direction: column; width:100%; max-height:0; transition:max-height 0.3s ease; }
+      nav ul.active { max-height:500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="index2.html" class="logo">D’e HMS Academia</a>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div><div></div><div></div>
+    </div>
+    <ul id="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="library.html">Library Categories</a></li>
+      <li><a href="#resources">Study Resources</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#about">About / Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <header id="home">
+    <h1>Welcome to D’e HMS Academia</h1>
+    <p>Search academic and trusted resources for your topic</p>
+  </header>
+
+  <!-- Search Section -->
+  <div class="search-section">
+    <input type="text" id="searchInput" placeholder="Type a topic, e.g., mathematics, culture, health...">
+    <button onclick="smartSearch()">Search</button>
+  </div>
+
+  <!-- Suggestions -->
+  <div id="suggestions" style="display:none;">
+    <h2>Suggested Sources:</h2>
+    <ul id="suggestions-list"></ul>
+  </div>
+
+  <!-- Suggested Libraries Section -->
+  <div id="libraries" class="section">
+    <h2>Suggested Popular Libraries</h2>
+    <ul>
+      <li><a href="https://scholar.google.com/" target="_blank">Google Scholar</a></li>
+      <li><a href="https://www.jstor.org/" target="_blank">JSTOR</a></li>
+      <li><a href="https://www.sciencedirect.com/" target="_blank">ScienceDirect</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank">PubMed</a></li>
+      <li><a href="https://www.academia.edu/" target="_blank">Academia.edu</a></li>
+    </ul>
+  </div>
+
+  <!-- Trending Topics -->
+  <div id="resources" class="section">
+    <h2>Trending Research Topics</h2>
+    <ul>
+      <li><a href="https://scholar.google.com/scholar?q=Artificial+Intelligence" target="_blank">Artificial Intelligence</a></li>
+      <li><a href="https://scholar.google.com/scholar?q=Climate+Change" target="_blank">Climate Change</a></li>
+      <li><a href="https://scholar.google.com/scholar?q=Quantum+Computing" target="_blank">Quantum Computing</a></li>
+      <li><a href="https://scholar.google.com/scholar?q=Renewable+Energy" target="_blank">Renewable Energy</a></li>
+      <li><a href="https://scholar.google.com/scholar?q=Genetic+Engineering" target="_blank">Genetic Engineering</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>© 2025 D’e HMS Academia | All rights reserved</p>
+  </footer>
+
+  <script>
+    const topics = {
+      mathematics: ["https://www.wolframalpha.com", "https://www.khanacademy.org/math"],
+      science: ["https://www.sciencedaily.com", "https://www.nature.com"],
+      technology: ["https://www.techcrunch.com", "https://www.sciencedirect.com"],
+      health: ["https://www.webmd.com", "https://pubmed.ncbi.nlm.nih.gov"],
+      food: ["https://www.allrecipes.com", "https://www.nutrition.org"],
+      culture: ["https://www.britannica.com", "https://www.nationalgeographic.com"],
+      history: ["https://www.history.com", "https://www.britannica.com"],
+      religion: ["https://www.quran.com", "https://www.biblegateway.com", "https://en.wikipedia.org/wiki/Religion"],
+      literature: ["https://www.gutenberg.org", "https://www.poetryfoundation.org"],
+      art: ["https://www.moma.org", "https://www.metmuseum.org"],
+      geography: ["https://www.nationalgeographic.com", "https://www.britannica.com"],
+      politics: ["https://www.cfr.org", "https://www.brookings.edu"],
+      economics: ["https://www.imf.org", "https://www.worldbank.org"],
+      law: ["https://www.law.cornell.edu", "https://www.hg.org"],
+      education: ["https://www.edutopia.org", "https://www.khanacademy.org"]
+    };
+
+    function smartSearch() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const suggestionsDiv = document.getElementById('suggestions');
+      const suggestionsList = document.getElementById('suggestions-list');
+      suggestionsList.innerHTML = "";
+
+      if (!query) { alert("Please enter a topic."); return; }
+
+      // Find topic
+      let found = false;
+      for (const key in topics) {
+        if (query.includes(key)) {
+          found = true;
+          topics[key].forEach(url => {
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+            suggestionsList.appendChild(li);
+          });
+          break;
+        }
+      }
+
+      // Fallback to Google
+      if (!found) {
+        const googleUrl = "https://www.google.com/search?q=" + encodeURIComponent(query);
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${googleUrl}" target="_blank">${googleUrl}</a>`;
+        suggestionsList.appendChild(li);
+      }
+
+      suggestionsDiv.style.display = "block";
+    }
+
+    function toggleMenu() {
+      document.getElementById('nav-links').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
